@@ -1,0 +1,7 @@
+# Visual Studio Code files
+.vscode/
+
+# Build and binary folders
+[Bb]uild/
+[Bb]uilds/
+[Bb]in/
