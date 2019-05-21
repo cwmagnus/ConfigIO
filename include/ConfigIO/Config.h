@@ -50,7 +50,7 @@ namespace ConfigIO
          * @param value Value to set
          */
         template<typename T>
-        void Set(const std::string* section, const std::string& key, T value);
+        void Set(const std::string& section, const std::string& key, T value);
 
         /**
          * @brief Serializes the config structure into a config file structure
@@ -84,6 +84,13 @@ namespace ConfigIO
 
         // Return default value if can't find section or key
         return defaultValue;
+    }
+
+    template<typename T>
+    inline void Config::Set(const std::string& section, const std::string& key, T value)
+    {
+        // Create or set the value
+        _configData[section][key] = std::to_string(value);
     }
 } // namespace ConfigIO
 
