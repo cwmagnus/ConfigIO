@@ -52,6 +52,13 @@ namespace ConfigIO
         template<typename T>
         void Set(const std::string* section, const std::string& key, T value);
 
+        /**
+         * @brief Serializes the config structure into a config file structure
+         * 
+         * @return std::string Serialized config file contents
+         */
+        std::string Serialize() const;
+
     private:
         std::map<std::string, std::map<std::string, std::string> > _configData;
     };
@@ -60,15 +67,15 @@ namespace ConfigIO
     inline T Config::Get(const std::string& section, const std::string& key, T defaultValue) const
     {
         // Check if the section exists
-        auto sectionIT = _configData.find(section);
-        if (sectionIT != _configData.end())
+        auto sit = _configData.find(section);
+        if (sit != _configData.end())
         {
             // Check if the key exists
-            auto keyIT = sectionIT->second.find(key);
-            if (keyIT != sectionIT->second.end())
+            auto kit = sit->second.find(key);
+            if (kit != sit->second.end())
             {
                 // Convert the string value at the key to the template type
-                std::stringstream stringValue(keyIT->second);
+                std::stringstream stringValue(kit->second);
                 T value;
                 stringValue >> value;
                 return value;

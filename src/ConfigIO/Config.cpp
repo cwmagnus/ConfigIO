@@ -12,4 +12,21 @@ namespace ConfigIO
     {
 
     }
+
+    std::string Config::Serialize() const
+    {
+        std::stringstream serializedConfigData;
+
+        for (auto sit = _configData.begin(); sit != _configData.end(); sit++)
+        {
+            serializedConfigData << '[' << sit->first << ']' << std::endl;
+            for (auto kit = sit->second.begin(); kit != sit->second.end(); kit++)
+            {
+                serializedConfigData << kit->first << '=' << kit->second << std::endl;
+            }
+            serializedConfigData << std::endl;
+        }
+
+        return serializedConfigData.str();
+    }
 } // namespace ConfigIO
