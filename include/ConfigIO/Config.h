@@ -27,8 +27,6 @@ namespace ConfigIO
          */
         Config(const std::map<std::string, std::map<std::string, std::string> >& configData);
 
-        ~Config();
-
         /**
          * @brief Gets a value from the config data
          * 
@@ -90,7 +88,9 @@ namespace ConfigIO
     inline void Config::Set(const std::string& section, const std::string& key, T value)
     {
         // Create or set the value
-        _configData[section][key] = std::to_string(value);
+        std::stringstream stringValue;
+        stringValue << value;
+        _configData[section][key] = stringValue.str();
     }
 } // namespace ConfigIO
 

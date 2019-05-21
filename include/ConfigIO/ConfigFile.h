@@ -1,15 +1,24 @@
 #ifndef CONFIG_IO_CONFIG_FILE_H
 #define CONFIG_IO_CONFIG_FILE_H
 
-#include <string>
+#include <ConfigIO/Config.h>
 
 namespace ConfigIO
 {
+    /**
+     * @brief Handles reading and writing config files
+     * 
+     */
     class ConfigFile
     {
     public:
-        ConfigFile();
-        ~ConfigFile();
+        /**
+         * @brief Writes out to a config file
+         * 
+         * @param configFileName Config file to write to
+         * @param config Config structure to write contents from
+         */
+        static void Write(const std::string& configFileName, Config& config);
     };
 } // namespace ConfigIO
 
