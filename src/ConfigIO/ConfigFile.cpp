@@ -1,4 +1,4 @@
-#include "ConfigFile.h"
+#include <ConfigIO/ConfigFile.h>
 
 namespace ConfigIO
 {
