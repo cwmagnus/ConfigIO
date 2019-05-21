@@ -15,10 +15,18 @@ namespace ConfigIO
         /**
          * @brief Writes out to a config file
          * 
-         * @param configFileName Config file to write to
+         * @param fileName Config file to write to
          * @param config Config structure to write contents from
          */
-        static void Write(const std::string& configFileName, Config& config);
+        static void Write(const std::string& fileName, Config& config);
+
+        /**
+         * @brief Reads a config file into a config structure
+         * 
+         * @param fileName Config file to read
+         * @return Config Output config structure with loaded data
+         */
+        static Config Read(const std::string& fileName);
     };
 } // namespace ConfigIO
 
