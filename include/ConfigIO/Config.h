@@ -72,6 +72,9 @@ namespace ConfigIO
             auto kit = sit->second.find(key);
             if (kit != sit->second.end())
             {
+                // If the type is just a string then return it
+                if (std::is_same<T, std::string>::value) return kit->second;
+
                 // Convert the string value at the key to the template type
                 std::stringstream stringValue(kit->second);
                 T value;

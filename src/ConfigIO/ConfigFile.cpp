@@ -26,36 +26,58 @@ namespace ConfigIO
         std::string section;
         while (std::getline(configFile, line))
         {
+            // Trim the lines whitespace and comments
+            line = Trim(line);
+
             // Check if the line is a section otherwise try to read it as a key value pair
-            if (line.find('[') != std::string::npos && line.find(']') != std::string::npos)
+            std::size_t openBracketPosition = line.find('[');
+            std::size_t closeBracketPosition = line.find(']');
+            if (openBracketPosition != std::string::npos && closeBracketPosition != std::string::npos)
             {
                 // Record the section name
-                std::size_t endBracketPos = line.find(']');
-                section = line.substr(1, endBracketPos - 1);
+                section = line.substr(openBracketPosition + 1, closeBracketPosition - 1);
             }
             else
             {
-                // Try to read the line as a key value pair
-                std::stringstream lineStream(line);
-                std::string segment;
-                std::vector<std::string> pair;
-                while(std::getline(lineStream, segment, '='))
+                // Try to read the key and value pair
+                std::size_t delimiterPosition = line.find('=');
+                if (delimiterPosition != std::string::npos)
                 {
-                    pair.push_back(segment);
-                }
+                    std::string key = line.substr(0, delimiterPosition);
+                    std::string value = line.substr(delimiterPosition + 1);
 
-                // If the vector has a key and value then add it to the data map otherwise reset the section
-                if (pair.size() == 2)
-                {
-                    configData[section][pair[0]] = pair[1];
-                }
-                else
-                {
-                    section = "";
+                    if (value.find("\"") != std::string::npos)
+                    {
+                        value = value.substr(1, value.length() - 2);
+                    }
+
+                    configData[section][key] = value;
                 }
             }
         }
 
         return Config(configData);
+    }
+
+    std::string ConfigFile::Trim(const std::string& string)
+    {
+        // Remove the comments from the string
+        std::string trimmedString = string;
+        const std::size_t commentPosition = string.find("#");
+        if (commentPosition != std::string::npos)
+        {
+            trimmedString = trimmedString.substr(0, commentPosition);
+        }
+
+        // Remove whitespace from the string
+        const std::size_t begin = trimmedString.find_first_not_of(" \t");
+        if (begin == std::string::npos) 
+        {
+            return "";
+        }
+        const std::size_t end = trimmedString.find_last_not_of(" \t");
+        const std::size_t range = end - begin + 1;
+
+        return trimmedString.substr(begin, range);
     }
 } // namespace ConfigIO

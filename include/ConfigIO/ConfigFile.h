@@ -27,6 +27,15 @@ namespace ConfigIO
          * @return Config Output config structure with loaded data
          */
         static Config Read(const std::string& fileName);
+
+    private:
+        /**
+         * @brief Trims both comments and whitespace from the parsed file
+         * 
+         * @param string String to trim
+         * @return std::string The trimmed string
+         */
+        static std::string Trim(const std::string& string);
     };
 } // namespace ConfigIO
 
